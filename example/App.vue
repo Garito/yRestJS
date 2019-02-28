@@ -1,17 +1,27 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <component-fixture>
+
+      <YRest />
+
+      <Editor slot="control" slot-scope="scope" v-bind="scope"/>
+
+    </component-fixture>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { ComponentFixture, Editor } from 'component-fixture'
+import "component-fixture/dist/ComponentFixture.css";
+import YRest from '@/components/YRest.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    ComponentFixture,
+    Editor,
+    YRest
   }
 }
 </script>

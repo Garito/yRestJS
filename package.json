@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve ./example/main.js --open",
-    "build": "vue-cli-service build --name app --entry ./src/index.js --target lib",
+    "build": "vue-cli-service build --name yrestjs --entry ./src/index.js --target lib",
     "lint": "vue-cli-service lint",
     "doc:build": "npx vuedoc.md --section API --output ./README.md ./src/components/YRest.vue",
     "prepublishOnly": "npm run lint && npm run build && npm run styleguide:build && npm run doc:build",

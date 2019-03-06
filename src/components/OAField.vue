@@ -15,6 +15,9 @@ export default {
       on: {
         input (value) {
           self.$emit('input', value)
+        },
+        change (value) {
+          self.$emit('change', value)
         }
       }
     }

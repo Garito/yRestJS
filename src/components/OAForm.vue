@@ -16,7 +16,8 @@
         <!-- Use this slot to override the field completely -->
         <slot :name="field[0]" :form="form" :schema="schema">
           <OAField :name="fName(name, field[0])" :schema="field[1]" v-model="form[field[0]]" :key="fName(name, field[0])"
-            :errors="((errors || {})[field[0]]) ? errors[field[0]] : null" :focus="index === 0" :readonly="readonly">
+            :errors="((errors || {})[field[0]]) ? errors[field[0]] : null" :focus="index === 0" :readonly="readonly"
+            @change="(value) => change(name, value)">
           </OAField>
         </slot>
         <!-- Use this slot to add content after the field -->
@@ -140,6 +141,9 @@ export default {
        * Sends the whole form on every change (provides real time modifications)
        */
       this.$emit('input', this.form)
+    },
+    change (name, value) {
+      this.$emit('change', { name: name, value: value })
     },
     /**
      * This method will inform the parent that the form has been submit by the user

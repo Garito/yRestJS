@@ -17,7 +17,7 @@
         <slot :name="field[0]" :form="form" :schema="schema">
           <OAField :name="fName(name, field[0])" :schema="field[1]" v-model="form[field[0]]" :key="fName(name, field[0])"
             :errors="((errors || {})[field[0]]) ? errors[field[0]] : null" :focus="index === 0" :readonly="readonly"
-            @change="(value) => change(name, value)">
+            @change="(value) => change(field[0], value)">
           </OAField>
         </slot>
         <!-- Use this slot to add content after the field -->

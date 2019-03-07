@@ -58,7 +58,11 @@ export default {
         result.push(this.schema['x-yrest-size'])
       }
       if (this.schema['x-yrest-extra_label_classes']) {
-        result.concat(this.schema['x-yrest-extra_label_classes'])
+        let classes = this.schema['x-yrest-extra_lable_classes']
+        if (typeof classes === 'string') {
+          classes = classes.split()
+        }
+        result = result.concat(classes)
       }
       return result
     },
@@ -72,7 +76,11 @@ export default {
         result.push(this.schema['x-yrest-size'])
       }
       if (this.schema['x-yrest-extra_textarea_classes']) {
-        result.concat(this.schema['x-yrest-extra_textarea_classes'])
+        let classes = this.schema['x-yrest-extra_textarea_classes']
+        if (typeof classes === 'string') {
+          classes = classes.split()
+        }
+        result = result.concat(classes)
       }
       return result
     }

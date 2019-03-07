@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="help" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) || schema['x-yrest-hint'] }}</div>
+    <div :class="hintClasses" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) || schema['x-yrest-hint'] }}</div>
     <div class="help errors is-danger" v-if="errors">
       <ul>
         <li v-for="(error, index) in errors" :key="'Error_' + index">{{ error }}</li>
@@ -76,7 +76,11 @@ export default {
         result.push(this.schema['x-yrest-size'])
       }
       if (this.schema['x-yrest-extra_label_classes']) {
-        result.concat(this.schema['x-yrest-extra_label_classes'])
+        let classes = this.schema['x-yrest-extra_label_classes']
+        if (typeof classes === 'string') {
+          classes = classes.split()
+        }
+        result = result.concat(classes)
       }
       return result
     },
@@ -92,7 +96,11 @@ export default {
         result.push('is-expanded')
       }
       if (this.schema['x-yrest-extra_control_classes']) {
-        result.concat(this.schema['x-yrest-extra_control_classes'])
+        let classes = this.schema['x-yrest-extra_control_classes']
+        if (typeof classes === 'string') {
+          classes = classes.split()
+        }
+        result = result.concat(classes)
       }
       return result
     },
@@ -105,7 +113,22 @@ export default {
         result.push(this.schema['x-yrest-size'])
       }
       if (this.schema['x-yrest-extra_input_classes']) {
-        result = result.concat(this.schema['x-yrest-extra_input_classes'])
+        let classes = this.schema['x-yrest-extra_input_classes']
+        if (typeof classes === 'string') {
+          classes = classes.split()
+        }
+        result = result.concat(classes)
+      }
+      return result
+    },
+    hintClasses () {
+      let result = ['help']
+      if (this.schema['x-yrest-extra_hint_classes']) {
+        let classes = this.schema['x-yrest-extra_hint_classes']
+        if (typeof classes === 'string') {
+          classes = classes.split()
+        }
+        result = result.concat(classes)
       }
       return result
     },

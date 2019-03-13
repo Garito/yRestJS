@@ -132,14 +132,6 @@ function storeData (rootModel, modules, apiUrl) {
           return result
         }
       },
-      async getSecurity (context) {
-        let security = await context.dispatch('api', { name: rootModel + '/get_security' })
-        if (security.ok) {
-          context.commit('setUsers', security.result.users)
-          context.commit('setPermissions', security.result.permissions)
-          context.commit('setRoles', security.result.roles)
-        }
-      },
       async api (context, payload) {
         let operation = context.getters.operation(payload.name)
         if (operation) {
@@ -157,6 +149,14 @@ function storeData (rootModel, modules, apiUrl) {
           let result = await context.dispatch('fetch', options)
           let rjson = await result.json()
           return rjson
+        }
+      },
+      async loadGlobalContext (context, endpoint = '/get_global_context') {
+        let globalContext = await context.dispatch('api', { name: rootModel + endpoint })
+        if (globalContext.ok) {
+          for (var [name, value] of Object.entries(globalContext.result)) {
+            context.commit('set' + name[0].toUpperCase() + name.slice(1), value)
+          }
         }
       },
       async loadContext (context, url) {

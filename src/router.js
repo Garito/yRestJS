@@ -14,7 +14,7 @@ function BeforeEachGard (rootModel, views, components, store) {
       to.params.component = rootModel + '_setup'
       next()
     } else {
-      if (!store.state.permissions) { await store.dispatch('getSecurity') }
+      if (!store.state.permissions) { await store.dispatch('loadGlobalContext') }
 
       let viewsNames = Object.keys(views)
       let parts = to.path.split('/')

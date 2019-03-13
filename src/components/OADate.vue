@@ -6,21 +6,23 @@
         <font-awesome-icon class="has-text-grey-light" :icon="['far', 'calendar-alt']" slot="leftIcon"></font-awesome-icon>
       </OAInput>
     </div>
-    <div class="media" @click="editing = true" v-else>
-      <div class="media-left">
-        <span class="image"><font-awesome-icon :icon="[ 'far', 'calendar-alt']"></font-awesome-icon></span>
+    <template v-else>
+      <div class="media" @click="editing = true">
+        <div class="media-left">
+          <span class="image"><font-awesome-icon :icon="[ 'far', 'calendar-alt']"></font-awesome-icon></span>
+        </div>
+        <div class="media-content">
+          <div :class="{ 'is-size-7': value }">{{ schema['x-yrest-label'] || schema['x-yrest-sr_only'] }}</div>
+          <div :class="{ 'has-text-danger': outOfDay }" v-if="value">{{ formattedDate }}</div>
+        </div>
       </div>
-      <div class="media-content">
-        <div :class="{ 'is-size-7': value }">{{ schema['x-yrest-label'] || schema['x-yrest-sr_only'] }}</div>
-        <div :class="{ 'has-text-danger': outOfDay }" v-if="value">{{ formattedDate }}</div>
+      <div :class="hintClasses" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) || schema['x-yrest-hint'] }}</div>
+      <div class="help errors is-danger" v-if="errors">
+        <ul>
+          <li v-for="(error, index) in errors" :key="'Error_' + index">{{ error }}</li>
+        </ul>
       </div>
-    </div>
-    <div :class="hintClasses" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) || schema['x-yrest-hint'] }}</div>
-    <div class="help errors is-danger" v-if="errors">
-      <ul>
-        <li v-for="(error, index) in errors" :key="'Error_' + index">{{ error }}</li>
-      </ul>
-    </div>
+    </template>
   </div>
 </template>
 

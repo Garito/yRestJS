@@ -15,6 +15,12 @@
         <div :class="{ 'has-text-danger': outOfDay }" v-if="value">{{ formattedDate }}</div>
       </div>
     </div>
+    <div :class="hintClasses" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) || schema['x-yrest-hint'] }}</div>
+    <div class="help errors is-danger" v-if="errors">
+      <ul>
+        <li v-for="(error, index) in errors" :key="'Error_' + index">{{ error }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -37,7 +43,18 @@ export default {
   computed: {
     value2Date () { return new Date(this.value) },
     formattedDate () { return this.value2Date.toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) },
-    outOfDay () { return new Date() > this.value2Date }
+    outOfDay () { return new Date() > this.value2Date },
+    hintClasses () {
+      let result = ['help']
+      if (this.schema['x-yrest-extra_hint_classes']) {
+        let classes = this.schema['x-yrest-extra_hint_classes']
+        if (typeof classes === 'string') {
+          classes = classes.split()
+        }
+        result = result.concat(classes)
+      }
+      return result
+    }
   },
   watch: {
     value (newVal) {

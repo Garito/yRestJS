@@ -62,6 +62,8 @@ export default {
         result = 'number'
       } else if (result === 'string') {
         result = 'text'
+      } else if (result === 'date-time') {
+        result = 'datetime-local'
       }
 
       return result

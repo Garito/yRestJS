@@ -13,7 +13,7 @@
         </div>
         <div class="media-content">
           <div :class="{ 'is-size-7': value }">{{ schema['x-yrest-label'] || schema['x-yrest-sr_only'] }}</div>
-          <div :class="{ 'has-text-danger': outOfDay }" v-if="value">{{ formattedDate }}</div>
+          <div :class="{ outOfDayClass: outOfDay }" v-if="value">{{ formattedDate }}</div>
         </div>
       </div>
       <div :class="hintClasses" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) || schema['x-yrest-hint'] }}</div>
@@ -39,7 +39,8 @@ export default {
     required: { type: Boolean, default: false },
     errors: { type: Array, default: null },
     focus: { type: Boolean, default: false },
-    readonly: { type: Boolean, default: false }
+    readonly: { type: Boolean, default: false },
+    outOfDayClass: { type: String, default: '' }
   },
   data: () => ({ editing: false }),
   computed: {

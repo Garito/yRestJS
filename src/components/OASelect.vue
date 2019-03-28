@@ -39,7 +39,7 @@ export default {
       let options = this.schema.oneOf || this.schema.enum
       if (Array.isArray(options)) {
         let result = []
-        for (var [label, choice] of options) {
+        for (var [choice, label] of options) {
           result.push({ choice: choice, label: label })
         }
         return result

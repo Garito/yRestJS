@@ -33,15 +33,8 @@ export default {
     readonly: { type: Boolean, default: false }
   },
   computed: {
-    multiple () {
-      return this.schema.enum !== undefined
-    },
-    withLabel (options = null) {
-      if (options === null) {
-        options = this.options
-      }
-      return typeof options[0] === "object" && options[0] !== null
-    },
+    multiple () { return this.schema.enum !== undefined },
+    withLabel () { return typeof this.options[0] === "object" && this.options[0] !== null },
     options () {
       let options = this.schema.oneOf || this.schema.enum
       if (Array.isArray(options)) {

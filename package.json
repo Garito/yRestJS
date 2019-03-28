@@ -13,7 +13,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "vue": "^2.6.6"
+    "vue": "^2.6.6",
+    "vue-multiselect": "^2.1.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",

@@ -4,6 +4,7 @@ import OAInput from './components/OAInput'
 import OATextarea from './components/OATextarea'
 import OADate from './components/OADate'
 import OACheckbox from './components/OACheckbox'
+import OASelect from './components/OASelect'
 
 import { focus, can } from './directives'
 
@@ -37,6 +38,7 @@ export {
   OATextarea,
   OADate,
   OACheckbox,
+  OASelect,
   focus,
   can,
   BeforeEachGard,

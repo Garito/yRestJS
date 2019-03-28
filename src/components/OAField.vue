@@ -1,13 +1,15 @@
 <script>
+import Multiselect from 'vue-multiselect'
 import OAInput from './OAInput'
 import OATextarea from './OATextarea'
 import OADate from './OADate'
 import OACheckbox from './OACheckbox'
+import OASelect from './OASelect'
 
 export default {
   name: 'OAField',
-  components: { OAInput, OATextarea, OADate, OACheckbox },
-  props: { name: String, schema: Object, value: [ String, Number, Date, Boolean ], focus: Boolean, readonly: Boolean, errors: Object },
+  components: { OAInput, OATextarea, OADate, OACheckbox, OASelect },
+  props: { name: String, schema: Object, value: [ String, Number, Date, Boolean, Array ], focus: Boolean, readonly: Boolean, errors: Object },
   render (createElement) {
     var self = this
     var opts = {
@@ -58,6 +60,12 @@ export default {
         return createElement('OAInput', opts)
       case 'boolean':
         return createElement('OACheckbox', opts)
+      case 'array':
+        if (self.schema.enum) {
+          return createElement('OASelect', opts)
+        } else {
+          return createElement('OAInput', opts)
+        }
       default:
         return createElement('OAInput', opts)
     }

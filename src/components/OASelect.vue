@@ -37,7 +37,7 @@ export default {
     withLabel () { return typeof this.options[0] === "object" && this.options[0] !== null },
     options () {
       let options = this.schema.oneOf || this.schema.enum
-      if (Array.isArray(options)) {
+      if (Array.isArray(options[0])) {
         let result = []
         for (var [choice, label] of options) {
           result.push({ choice: choice, label: label })

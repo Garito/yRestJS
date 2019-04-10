@@ -1,6 +1,6 @@
 import { focus, can } from './directives'
-
 import { BeforeEachGard, loadComponents } from './router'
+import storeData from './store'
 
 const OAForm = () => import('./components/OAForm')
 const OAField = () => import('./components/OAField')
@@ -9,8 +9,6 @@ const OATextarea = () => import('./components/OATextarea')
 const OADate = () => import('./components/OADate')
 const OACheckbox = () => import('./components/OACheckbox')
 const OASelect = () => import('./components/OASelect')
-
-const storeData = () => import('./store')
 
 function spreadForm (form, containers, exceptions = null, callbacks = null) {
   for (var child of form.$children) {

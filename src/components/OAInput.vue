@@ -15,7 +15,7 @@
           :required="required" :type="type" :maxlength="schema['x-yrest-maxlength'] || null"
           :minlength="schema['x-yrest-minlength'] || null" :readonly="readonly"
           :placeholder="$t(schema['x-yrest-placeholder']) || schema['x-yrest-placeholder'] || null" v-focus="focus"
-          @input="validate($event)" @change="$emit('change', value)" />
+          @input="validate($event)" @change="$emit('change', value)" @keyup="$emit('keyup', $event)" />
 
         <!-- Use this slot to set a left icon -->
         <span class="icon is-small is-left" v-if="$slots.leftIcon"><slot name="leftIcon"></slot></span>
@@ -54,6 +54,7 @@ export default {
   computed: {
     type () {
       let result = this.schema['x-yrest-input_type'] || this.schema.format || this.schema.type || 'text'
+
       if (result === 'password' && this.toggled) {
         result = 'text'
       } else if (result === 'integer') {

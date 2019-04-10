@@ -44,7 +44,7 @@ export default {
   props: {
     name: { type: String, required: true },
     schema: { type: Object, default: () => ({}) },
-    value: { type: [ String, Number, Date ], default: '' },
+    value: { type: [ String, Number, Date, Object ], default: '' },
     required: { type: Boolean, default: false },
     errors: { type: Array, default: null },
     focus: { type: Boolean, default: false },

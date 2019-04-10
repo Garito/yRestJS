@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import OAField from './OAField'
+const OAField = () => import('./OAField')
 
 export default {
   name: 'OAForm',

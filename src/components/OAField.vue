@@ -1,10 +1,11 @@
 <script>
-import Multiselect from 'vue-multiselect'
-import OAInput from './OAInput'
-import OATextarea from './OATextarea'
-import OADate from './OADate'
-import OACheckbox from './OACheckbox'
-import OASelect from './OASelect'
+const Multiselect = () => import('vue-multiselect')
+
+const OAInput = () => import('./OAInput')
+const OATextarea = () => import('./OATextarea')
+const OADate = () => import('./OADate')
+const OACheckbox = () => import('./OACheckbox')
+const OASelect = () => import('./OASelect')
 
 export default {
   name: 'OAField',
@@ -72,3 +73,5 @@ export default {
   }
 }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

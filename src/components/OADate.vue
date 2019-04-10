@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import OAInput from './OAInput'
+const OAInput = () => import('./OAInput')
 
 export default {
   name: 'OADate',

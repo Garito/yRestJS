@@ -1,16 +1,16 @@
-import OAForm from './components/OAForm'
-import OAField from './components/OAField'
-import OAInput from './components/OAInput'
-import OATextarea from './components/OATextarea'
-import OADate from './components/OADate'
-import OACheckbox from './components/OACheckbox'
-import OASelect from './components/OASelect'
-
 import { focus, can } from './directives'
 
 import { BeforeEachGard, loadComponents } from './router'
 
-import storeData from './store'
+const OAForm = () => import('./components/OAForm')
+const OAField = () => import('./components/OAField')
+const OAInput = () => import('./components/OAInput')
+const OATextarea = () => import('./components/OATextarea')
+const OADate = () => import('./components/OADate')
+const OACheckbox = () => import('./components/OACheckbox')
+const OASelect = () => import('./components/OASelect')
+
+const storeData = () => import('./store')
 
 function spreadForm (form, containers, exceptions = null, callbacks = null) {
   for (var child of form.$children) {

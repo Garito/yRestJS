@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect'
+const Multiselect = () => import('vue-multiselect')
+
 export default {
   name: 'OASelect',
   components: { Multiselect },
@@ -79,3 +80,5 @@ export default {
   }
 }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

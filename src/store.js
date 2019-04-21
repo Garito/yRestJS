@@ -1,6 +1,6 @@
 function storeData (rootModel, modules, apiUrl) {
   return {
-    state: { openApi: null, users: null, permissions: null, roles: null, token: null, actor: null, context: null },
+    state: { openApi: null, users: null, permissions: null, roles: null, token: null, actor: null, context: null, errors: {} },
     getters: {
       operation: state => operationId => {
         if (state.openApi) {
@@ -85,7 +85,9 @@ function storeData (rootModel, modules, apiUrl) {
       setRoles: (state, roles) => { state.roles = roles },
       setToken: (state, token) => { state.token = token },
       setActor: (state, actor) => { state.actor = actor },
-      setContext: (state, context) => { state.context = context }
+      setContext: (state, context) => { state.context = context },
+      setErrors: (state, errors) => { state.errors = errors },
+      setError: (state, payload) => { state.errors = { ...state.errors, ...payload } }
     },
     actions: {
       async fetch (context, payload) {
@@ -148,7 +150,25 @@ function storeData (rootModel, modules, apiUrl) {
           }
           let result = await context.dispatch('fetch', options)
           let rjson = await result.json()
-          return rjson
+          if (rjson.ok || rjson.access_token ) {
+            context.commit('setErrors', {})
+            return rjson
+          } else {
+            if ([400, 409].indexOf(rjson.code) > -1) {
+              var message = JSON.parse(rjson.message.replace(/'/g, '"'))
+            } else {
+              message = rjson.message
+            }
+            if (method === 'post') {
+              let data = {}
+              data[url.split('/').pop()] = message
+              context.commit('setError', data)
+            } else if (method === 'put' && url === '/auth') {
+              context.commit('setError', { login: message })
+            } else {
+              context.commit('setErrors', message)
+            }
+          }
         }
       },
       async loadGlobalContext (context, endpoint = '/get_global_context') {

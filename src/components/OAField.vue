@@ -10,7 +10,14 @@ const OASelect = () => import('./OASelect')
 export default {
   name: 'OAField',
   components: { OAInput, OATextarea, OADate, OACheckbox, OASelect },
-  props: { name: String, schema: Object, value: [ String, Number, Date, Boolean, Array, Object ], focus: Boolean, readonly: Boolean, errors: Object },
+  props: {
+    name: String,
+    schema: Object,
+    value: [ String, Number, Date, Boolean, Array, Object ],
+    focus: Boolean,
+    readonly: Boolean,
+    errors: [String, Array, Object]
+  },
   render (createElement) {
     var self = this
     var opts = {

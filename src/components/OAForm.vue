@@ -94,7 +94,13 @@ export default {
     change (name, value) { this.$emit('change', { name: name, value: value }) },
     submit () {
       this.focused = false
-      this.$emit('submit', { name: this.name, form: this.form })
+      let form = {}
+      for (var [key, value] of Object.entries(this.form)) {
+        if ((!Array.isArray(value) && value) || value.length) {
+          form[key] = value
+        }
+      }
+      this.$emit('submit', { name: this.name, form: form })
     }
   },
   watch: {

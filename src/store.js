@@ -2,6 +2,8 @@ function storeData (rootModel, modules, apiUrl) {
   return {
     state: { openApi: null, users: null, permissions: null, roles: null, token: null, actor: null, context: null, errors: {} },
     getters: {
+      url: state => obj => { return obj.path === '' ? '/' : obj.path === '/' ? '/' + obj.slug : obj.path + '/' + obj.slug },
+      path: (state, getters) => obj => getters.url(obj).substr(1),
       operation: state => operationId => {
         if (state.openApi) {
           for (var [name, path] of Object.entries(state.openApi.paths)) {
@@ -49,17 +51,7 @@ function storeData (rootModel, modules, apiUrl) {
             if (perm.roles.length === 0) {
               return true
             } else {
-              if (state.context && state.context.object) {
-                if (state.context.object.path === '') {
-                  var url = '/'
-                } else if (state.context.object.path === '/') {
-                  url = '/' + state.context.object.slug
-                } else {
-                  url = state.context.object.path + '/' + state.context.object.slug
-                }
-              } else {
-                url = ''
-              }
+              var url = (state.context && state.context.object) ? getters.url(state.context.object) : ''
               for (var per of perm.roles) {
                 if (state.actor && (state.actor.roles.indexOf(per) > -1 || (url && state.actor.roles.indexOf(per + '@' + url) > -1))) {
                   return true
@@ -141,7 +133,17 @@ function storeData (rootModel, modules, apiUrl) {
           let method = operation[1]
           for (var param of (context.state.openApi.paths[url].parameters || [])) {
             if (param.in === 'path') {
-              url = url.replace('{' + param.name + '}', payload[param.name])
+              var [search, replaceWith] = Object.keys(payload).indexOf(param.name) > -1
+                ? ['{' + param.name + '}', payload[param.name]]
+                : ['/{' + param.name + '}', '']
+              if (Object.keys(payload).indexOf(param.name) > -1) {
+                var search = '{' + param.name + '}'
+                var replaceWith = payload[param.name]
+              } else {
+                search = '/{' + param.name + '}'
+                replaceWith = ''
+              }
+              url = url.replace(search, replaceWith)
             }
           }
           let options = { url: url, method: method.toUpperCase() }
@@ -169,6 +171,26 @@ function storeData (rootModel, modules, apiUrl) {
               context.commit('setErrors', message)
             }
           }
+        }
+      },
+      async add (context, payload) {
+        let children = payload.children
+        delete payload.children
+        if (context.state.context.object.path) {
+          payload[context.state.context.object.type + '_Path'] = context.getters.path(context.state.context.object)
+        }
+        let result = await context.dispatch('api', payload)
+        if (result) {
+          let stateContext = context.state.context
+          stateContext.object[children].push(result.result.slug)
+          if (Object.keys(stateContext).indexOf(children) > -1) {
+            stateContext[children].push(result.result)
+          } else {
+            context.state[children].push(result.result)
+          }
+          context.commit('setContext', stateContext)
+
+          return result
         }
       },
       async loadGlobalContext (context, endpoint = '/get_global_context') {

@@ -61,6 +61,8 @@ export default {
           return createElement('OAInput', inputOpts, [ icon ])
         } else if (['date-time', 'date'].indexOf(this.schema.format) > -1) {
           return createElement('OADate', opts)
+        } else if (self.schema.oneOf) {
+          return createElement('OASelect', opts)
         } else {
           return createElement('OAInput', opts)
         }

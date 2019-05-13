@@ -15,7 +15,8 @@
           :required="required" :type="type" :maxlength="schema['x-yrest-maxlength'] || null"
           :minlength="schema['x-yrest-minlength'] || null" :readonly="readonly"
           :placeholder="$t(schema['x-yrest-placeholder']) || schema['x-yrest-placeholder'] || null" v-focus="focus"
-          @input="validate($event)" @change="$emit('change', value)" @keyup="$emit('keyup', $event)" />
+          @input="validate($event)" @change="$emit('change', value)" @keyup="$emit('keyup', $event)"
+          @keydown="$emit('keydown', $event)" />
 
         <!-- Use this slot to set a left icon -->
         <span class="icon is-small is-left" v-if="$slots.leftIcon"><slot name="leftIcon"></slot></span>

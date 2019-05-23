@@ -27,7 +27,7 @@ export default {
   props: {
     name: { type: String, required: true },
     schema: { type: Object, default: () => ({}) },
-    value: { type: [String, Array], default: '' },
+    value: { type: [String, Array, Object], default: '' },
     required: { type: Boolean, default: false },
     errors: { type: Array, default: null },
     focus: { type: Boolean, default: false },

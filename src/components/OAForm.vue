@@ -14,7 +14,7 @@
         <slot :name="fieldName" :form="form" :schema="schema">
           <OAField :name="fName(name, fieldName)" :schema="field" v-model="form[fieldName]" :key="fName(name, fieldName)"
             :errors="errors ? errors[fieldName] : null" :focus="shouldFocus(fieldName)" :readonly="readonly"
-            @change="(value) => change(fieldName, value)">
+            :required="schema.required.indexOf(fieldName) > -1" @change="(value) => change(fieldName, value)">
           </OAField>
         </slot>
 

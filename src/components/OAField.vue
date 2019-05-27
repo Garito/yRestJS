@@ -14,6 +14,7 @@ export default {
     name: String,
     schema: Object,
     value: [ String, Number, Date, Boolean, Array, Object ],
+    required: { type: Boolean, default: false },
     focus: Boolean,
     readonly: Boolean,
     errors: [String, Array, Object]

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit">
+  <form @submit.prevent="submit" ref="form">
     <div class="notification is-danger" v-if="errors">
       <p>{{ $t('App.forms.errors') || 'Please correct this errors:' }}</p>
       <p v-if="typeof errors === 'string'">{{ errors }}</p>
@@ -36,6 +36,7 @@
 
 <script>
 const OAField = () => import('./OAField')
+import { spreadForm } from '..'
 
 export default {
   name: 'OAForm',
@@ -47,7 +48,8 @@ export default {
     action: { type: String, default: '' },
     errors: { type: [String, Array, Object] },
     controls: { type: Boolean, default: true },
-    readonly: { type: Boolean, default: false }
+    readonly: { type: Boolean, default: false },
+    containers: { type: Array, default: null }
   },
   data: () => ({ form: {}, focused: false }),
   computed: {
@@ -103,11 +105,12 @@ export default {
       this.$emit('submit', { name: this.name, form: form })
     }
   },
+  created () {
+    if (this.containers) { spreadForm(this.$refs.form, this.containers) }
+  },
   watch: {
     form: {
-      handler: function () {
-        this.input()
-      },
+      handler: function () { this.input() },
       deep: true
     }
   }

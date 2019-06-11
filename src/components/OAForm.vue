@@ -49,7 +49,11 @@ export default {
   },
   data: () => ({ form: {}, focused: false, spreaded: false }),
   computed: {
-    fields () {
+    fields () { return this.resetFields() },
+    required () { return this.schema.required || [] }
+  },
+  methods: {
+    resetFields () {
       let visibleFields = {}
       if (this.schema) {
         let properties = this.schema.properties
@@ -85,15 +89,32 @@ export default {
     },
     input () { this.$emit('input', this.form) },
     change (name, value) { this.$emit('change', { name: name, value: value }) },
-    submit () {
-      this.focused = false
-      let form = {}
-      for (var [key, value] of Object.entries(this.form)) {
+    filterValues (values = null, schema = null, clean = true) {
+      if (values === null) { values = this.form }
+      if (schema === null) { schema = this.schema }
+      let actual = {}
+      for (var [key, value] of Object.entries(values)) {
         if ((!Array.isArray(value) && value) || value.length) {
-          form[key] = value
+          if (clean && schema.properties && Object.keys(schema.properties).indexOf(key) > -1 && typeof schema.properties[key] === 'object' && schema.properties[key] !== null) {
+            let keys = Object.keys(schema.properties[key])
+            if (schema.properties[key].type === 'string' && keys.indexOf('oneOf') > -1 && value.choice) {
+              value = value.choice
+            } else if (schema.properties[key].type === 'array' && keys.indexOf('items') > -1) {
+              let newDetails = []
+              for (var detail of value) {
+                newDetails.push(this.filterValues(detail, schema.properties[key].items))
+              }
+              value = newDetails
+            }
+          }
+          actual[key] = value
         }
       }
-      this.$emit('submit', { name: this.name, form: form })
+      return actual
+    },
+    submit () {
+      this.focused = false
+      this.$emit('submit', { name: this.name, form: this.filterValues(null, null, this.$parent.$options._componentTag !== 'OAObjectList') })
     }
   },
   updated () {

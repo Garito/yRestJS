@@ -1,6 +1,4 @@
 <script>
-const Multiselect = () => import('vue-multiselect')
-
 const OAInput = () => import('./OAInput')
 const OATextarea = () => import('./OATextarea')
 const OACheckbox = () => import('./OACheckbox')
@@ -64,8 +62,6 @@ export default {
         } else {
           return createElement('OAInput', opts)
         }
-      case 'number':
-        return createElement('OAInput', opts)
       case 'boolean':
         return createElement('OACheckbox', opts)
       case 'array':

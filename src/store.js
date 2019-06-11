@@ -137,8 +137,8 @@ function storeData (rootModel, modules, apiUrl) {
                 ? ['{' + param.name + '}', payload[param.name]]
                 : ['/{' + param.name + '}', '']
               if (Object.keys(payload).indexOf(param.name) > -1) {
-                var search = '{' + param.name + '}'
-                var replaceWith = payload[param.name]
+                search = '{' + param.name + '}'
+                replaceWith = payload[param.name]
               } else {
                 search = '/{' + param.name + '}'
                 replaceWith = ''
@@ -152,7 +152,7 @@ function storeData (rootModel, modules, apiUrl) {
           }
           let result = await context.dispatch('fetch', options)
           let rjson = await result.json()
-          if (rjson.ok || rjson.access_token ) {
+          if (rjson.ok || rjson.access_token) {
             context.commit('setErrors', {})
             return rjson
           } else {
@@ -195,7 +195,7 @@ function storeData (rootModel, modules, apiUrl) {
       },
       async loadGlobalContext (context, endpoint = '/get_global_context') {
         let globalContext = await context.dispatch('api', { name: rootModel + endpoint })
-        if (globalContext.ok) {
+        if (globalContext) {
           for (var [name, value] of Object.entries(globalContext.result)) {
             context.commit('set' + name[0].toUpperCase() + name.slice(1), value)
           }

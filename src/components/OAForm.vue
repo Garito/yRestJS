@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="submit" ref="form">
-    <div class="notification is-danger" v-if="errors">
+  <form :name="name" @submit.prevent="submit">
+    <div class="notification is-danger" v-if="errors" ref="errors">
       <p>{{ $t('App.forms.errors') || 'Please correct this errors:' }}</p>
       <p v-if="typeof errors === 'string'">{{ errors }}</p>
       <p v-else-if="errors.message">{{ errors.message }}</p>
@@ -8,13 +8,11 @@
     <template v-if="schema">
       <slot name="formTop"></slot>
 
-      <template v-for="[fieldName, field] in Object.entries(fields)">   
+      <template v-for="[fieldName, field] in Object.entries(fields)">
         <slot :name="'before_' + fieldName"></slot>
-        
+
         <slot :name="fieldName" :form="form" :schema="schema">
-          <OAField :name="fName(name, fieldName)" :schema="field" v-model="form[fieldName]" :key="fName(name, fieldName)"
-            :errors="errors ? errors[fieldName] : null" :focus="shouldFocus(fieldName)" :readonly="readonly"
-            :required="schema.required.indexOf(fieldName) > -1" @change="(value) => change(fieldName, value)">
+          <OAField :name="fName(name, fieldName)" :schema="field" v-model="form[fieldName]" :key="fName(name, fieldName)" :errors="errors && errors[fieldName] ? errors[fieldName] : null" :focus="shouldFocus(fieldName)" :readonly="readonly" :required="schema.required.indexOf(fieldName) > -1" @change="(value) => change(fieldName, value)" :containers="containers">
           </OAField>
         </slot>
 
@@ -64,10 +62,8 @@ export default {
           if (!value) {
             if (properties[el].type === 'boolean') {
               value = false
-            } else if (properties[el].type === 'integer') {
-              value = 0
             } else if (properties[el].type === 'number') {
-              value = 0.0
+              value = (properties[el].format === 'double') ? 0.0 : 0
             } else if (properties[el].type === 'array') {
               value = []
             } else if (properties[el].type === 'object') {
@@ -81,9 +77,6 @@ export default {
       }
       return visibleFields
     },
-    required () { return this.schema.required || [] }
-  },
-  methods: {
     fName (action, name) { return action.replace('/', '_') + '_' + name },
     shouldFocus (field) {
       // this fails because of the parentesis expression (focused is true when the form is submited but raises and error)
@@ -109,10 +102,7 @@ export default {
     if (this.containers) { spreadForm(this.$refs.form, this.containers) }
   },
   watch: {
-    form: {
-      handler: function () { this.input() },
-      deep: true
-    }
+    form: { handler: function () { this.input() }, deep: true }
   }
 }
 </script>

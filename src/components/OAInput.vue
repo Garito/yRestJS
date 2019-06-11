@@ -58,9 +58,7 @@ export default {
 
       if (result === 'password' && this.toggled) {
         result = 'text'
-      } else if (result === 'integer') {
-        result = 'number'
-      } else if (result === 'double') {
+      } else if (result === 'integer' || result === 'int' || result === 'double') {
         result = 'number'
       } else if (result === 'string') {
         result = 'text'
@@ -74,7 +72,7 @@ export default {
     labelClasses () {
       let result = []
       if (this.schema['x-yrest-sr_only']) {
-        result.push('sr-only')
+        result.push('is-sr-only')
       }
       if (this.schema['x-yrest-size']) {
         result.push(this.schema['x-yrest-size'])

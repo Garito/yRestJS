@@ -8,6 +8,7 @@ const OAInput = () => import('./components/OAInput')
 const OATextarea = () => import('./components/OATextarea')
 const OACheckbox = () => import('./components/OACheckbox')
 const OASelect = () => import('./components/OASelect')
+const OAObjectList = () => import('./components/OAObjectList')
 
 function spreadForm (form, containers, exceptions = null, callbacks = null) {
   if (form.$children.length) {
@@ -39,6 +40,7 @@ export {
   OATextarea,
   OACheckbox,
   OASelect,
+  OAObjectList,
   focus,
   can,
   BeforeEachGard,

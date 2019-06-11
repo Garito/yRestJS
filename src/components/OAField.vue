@@ -3,10 +3,11 @@ const OAInput = () => import('./OAInput')
 const OATextarea = () => import('./OATextarea')
 const OACheckbox = () => import('./OACheckbox')
 const OASelect = () => import('./OASelect')
+const OAObjectList = () => import('./OAObjectList')
 
 export default {
   name: 'OAField',
-  components: { OAInput, OATextarea, OADate, OACheckbox, OASelect },
+  components: { OAInput, OATextarea, OACheckbox, OASelect, OAObjectList },
   props: {
     name: String,
     schema: Object,
@@ -66,7 +67,9 @@ export default {
       case 'boolean':
         return createElement('OACheckbox', opts)
       case 'array':
-        if (self.schema.enum) {
+        if (self.schema.items.properties) {
+          return createElement('OAObjectList', opts)
+        } else if (self.schema.enum) {
           return createElement('OASelect', opts)
         } else {
           return createElement('OAInput', opts)

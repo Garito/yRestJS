@@ -3,7 +3,6 @@ const Multiselect = () => import('vue-multiselect')
 
 const OAInput = () => import('./OAInput')
 const OATextarea = () => import('./OATextarea')
-const OADate = () => import('./OADate')
 const OACheckbox = () => import('./OACheckbox')
 const OASelect = () => import('./OASelect')
 
@@ -60,8 +59,6 @@ export default {
           let icon = createElement('font-awesome-icon', { props: { icon: 'lock' }, slot: 'leftIcon' })
 
           return createElement('OAInput', inputOpts, [ icon ])
-        } else if (['date-time', 'date'].indexOf(this.schema.format) > -1) {
-          return createElement('OADate', opts)
         } else if (self.schema.oneOf) {
           return createElement('OASelect', opts)
         } else {

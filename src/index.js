@@ -6,7 +6,6 @@ const OAForm = () => import('./components/OAForm')
 const OAField = () => import('./components/OAField')
 const OAInput = () => import('./components/OAInput')
 const OATextarea = () => import('./components/OATextarea')
-const OADate = () => import('./components/OADate')
 const OACheckbox = () => import('./components/OACheckbox')
 const OASelect = () => import('./components/OASelect')
 
@@ -34,7 +33,6 @@ export {
   OAField,
   OAInput,
   OATextarea,
-  OADate,
   OACheckbox,
   OASelect,
   focus,

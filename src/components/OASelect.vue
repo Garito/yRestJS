@@ -4,8 +4,7 @@
       {{ $t(schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name ) || schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name }}
     </label>
     <div class="control" :class="controlClasses">
-      <Multiselect :value="value" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null"
-        :multiple="multiple" @input="value => $emit('input', value)">
+      <Multiselect :value="theValue" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null" :multiple="multiple" :disabled="readonly" @input="value => $emit('input', value)">
 
       </Multiselect>
     </div>
@@ -35,7 +34,7 @@ export default {
   },
   computed: {
     multiple () { return this.schema.enum !== undefined },
-    withLabel () { return typeof this.options[0] === "object" && this.options[0] !== null },
+    withLabel () { return typeof this.options[0] === 'object' && this.options[0] !== null },
     options () {
       let options = this.schema.oneOf || this.schema.enum
       if (Array.isArray(options[0])) {
@@ -76,6 +75,26 @@ export default {
         result = result.concat(classes)
       }
       return result
+    },
+    hintClasses () {
+      let result = ['help']
+      if (this.schema['x-yrest-extra_hint_classes']) {
+        let classes = this.schema['x-yrest-extra_hint_classes']
+        if (typeof classes === 'string') {
+          classes = classes.split()
+        }
+        result = result.concat(classes)
+      }
+      return result
+    },
+    theValue () {
+      if (typeof this.value === 'string' && this.withLabel) {
+        let value = this.value
+        let option = this.schema.oneOf.find(c => c.choice === value)
+        return option || value
+      } else {
+        return this.value
+      }
     }
   }
 }

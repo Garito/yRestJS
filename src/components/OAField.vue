@@ -14,7 +14,8 @@ export default {
     required: { type: Boolean, default: false },
     focus: Boolean,
     readonly: Boolean,
-    errors: [String, Array, Object]
+    errors: [String, Array, Object],
+    containers: Object
   },
   render (createElement) {
     var self = this

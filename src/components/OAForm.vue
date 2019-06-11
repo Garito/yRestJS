@@ -45,9 +45,9 @@ export default {
     errors: { type: [String, Array, Object] },
     controls: { type: Boolean, default: true },
     readonly: { type: Boolean, default: false },
-    containers: { type: Array, default: null }
+    containers: { type: Object, default: null }
   },
-  data: () => ({ form: {}, focused: false }),
+  data: () => ({ form: {}, focused: false, spreaded: false }),
   computed: {
     fields () {
       let visibleFields = {}
@@ -96,8 +96,12 @@ export default {
       this.$emit('submit', { name: this.name, form: form })
     }
   },
-  created () {
-    if (this.containers) { spreadForm(this.$refs.form, this.containers) }
+  updated () {
+    if (this.containers && !this.spreaded) {
+      this.$nextTick(function() {
+        this.spreaded = spreadForm(this, this.containers)
+      }.bind(this))
+    }
   },
   watch: {
     form: { handler: function () { this.input() }, deep: true }

@@ -21,24 +21,22 @@
 
       <slot name="formBottom"></slot>
 
-      <div class="control columns" slot="controls" v-if="!readonly && controls">
-        <div class="column">
-          <button class="button is-primary is-fullwidth" type="submit" slot="submitBtn">{{ action }}</button>
-        </div>
+      <FormControls name="controls" :action="action" v-if="!readonly && controls" @ok="submit">
         <slot name="additionalControls"></slot>
-      </div>
+      </FormControls>
     </template>
     <template v-else>{{ $t('App.loading') || 'Loading...' }}</template>
   </form>
 </template>
 
 <script>
-const OAField = () => import('./OAField')
 import { spreadForm } from '..'
+const OAField = () => import('./OAField')
+const FormControls = () => import('./FormControls')
 
 export default {
   name: 'OAForm',
-  components: { OAField },
+  components: { OAField, FormControls },
   props: {
     name: { type: String, required: true },
     schema: { type: Object, required: true },

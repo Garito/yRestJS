@@ -99,7 +99,7 @@ export default {
             let keys = Object.keys(schema.properties[key])
             if (schema.properties[key].type === 'string' && keys.indexOf('oneOf') > -1 && value.choice) {
               value = value.choice
-            } else if (schema.properties[key].type === 'array' && keys.indexOf('items') > -1) {
+            } else if (schema.properties[key].type === 'array' && keys.indexOf('items') > -1 && schema.properties[key].items.type === 'object') {
               let newDetails = []
               for (var detail of value) {
                 newDetails.push(this.filterValues(detail, schema.properties[key].items))

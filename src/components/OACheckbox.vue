@@ -2,7 +2,7 @@
   <div class="field" :class="fieldClasses">
     <label class="checkbox" :class="labelClasses">
       <slot name="widget" :checked="checked" :schema="schema"></slot>
-      <input type="checkbox" v-model="checked" :required="required" @click="click" @change="$emit('change', checked)"
+      <input type="checkbox" v-model="checked" :required="required" @click="click" @change="$emit('input', checked)"
         v-show="!$scopedSlots.widget" />
       <span :class="{ 'sr-only' : schema['x-yrest-sr_only'] }">
         {{ $t(schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name ) || schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name }}

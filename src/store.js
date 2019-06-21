@@ -214,7 +214,6 @@ function storeData (rootModel, modules, apiUrl) {
       reset (context) {
         context.commit('setToken', null)
         context.commit('setActor', null)
-        context.commit('setContext', null)
       }
     },
     modules: modules

@@ -1,13 +1,16 @@
 <template>
   <div class="field" :class="fieldClasses">
-    <label class="checkbox" :class="labelClasses">
+    <label :class="labelClasses">
       <slot name="widget" :checked="checked" :schema="schema"></slot>
-      <input type="checkbox" v-model="checked" :required="required" @click="click" @change="$emit('input', checked)"
-        v-show="!$scopedSlots.widget" />
-      <span :class="{ 'sr-only' : schema['x-yrest-sr_only'] }">
-        {{ $t(schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name ) || schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name }}
-      </span>
+      <input type="checkbox" v-model="checked" :required="required" @click="click" @change="$emit('input', checked)" v-show="!$scopedSlots.widget" />
+      {{ $t(schema['x-yrest-label'] || name ) }}
     </label>
+    <div :class="hintClasses" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) }}</div>
+    <div class="help errors is-danger" v-if="errors">
+      <ul>
+        <li v-for="(error, index) in errors" :key="'Error_' + index">{{ error }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -27,18 +30,21 @@ export default {
   computed: {
     fieldClasses () { return this.schema['x-yrest-extra_field_classes'] },
     labelClasses () {
-      let result = []
-      if (this.readonly) {
-        result.push('is-readonly')
-      }
-      if (this.schema['x-yrest-size']) {
-        result.push(this.schema['x-yrest-size'])
-      }
+      let result = ['checkbox']
+      if (this.readonly) { result.push('is-readonly') }
+      if (this.schema['x-yrest-size']) { result.push(this.schema['x-yrest-size']) }
       if (this.schema['x-yrest-extra_label_classes']) {
         let classes = this.schema['x-yrest-extra_label_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
+        result = result.concat(classes)
+      }
+      return result
+    },
+    hintClasses () {
+      let result = ['help']
+      if (this.schema['x-yrest-extra_hint_classes']) {
+        let classes = this.schema['x-yrest-extra_hint_classes']
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result
@@ -46,9 +52,8 @@ export default {
   },
   methods: {
     click (e) {
-      if (this.readonly) {
-        e.preventDefault()
-      }
+      if (this.readonly) { e.preventDefault() }
+      else { this.$emit('change', e.target.checked) }
     }
   },
   created () { this.checked = this.value }

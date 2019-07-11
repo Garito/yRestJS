@@ -5,6 +5,7 @@
       <p v-if="typeof errors === 'string'">{{ errors }}</p>
       <p v-else-if="errors.message">{{ errors.message }}</p>
     </div>
+    <slot name="layout"></slot>
     <template v-if="schema">
       <slot name="formTop"></slot>
 
@@ -12,7 +13,7 @@
         <slot :name="'before_' + fieldName"></slot>
 
         <slot :name="fieldName" :form="form" :schema="schema">
-          <OAField :name="fName(name, fieldName)" :schema="field" v-model="form[fieldName]" :key="fName(name, fieldName)" :errors="errors && errors[fieldName] ? errors[fieldName] : null" :focus="shouldFocus(fieldName)" :readonly="readonly" :required="schema.required.indexOf(fieldName) > -1" @change="(value) => change(fieldName, value)" :containers="containers">
+          <OAField :name="fName(name, fieldName)" :schema="field" v-model="form[fieldName]" :key="fName(name, fieldName)" :errors="errors && errors[fieldName] ? errors[fieldName] : null" :focus="shouldFocus(fieldName)" :readonly="readonly" :required="schema.required.indexOf(fieldName) > -1" @change="value => change(fieldName, value)">
           </OAField>
         </slot>
 
@@ -45,7 +46,7 @@ export default {
     errors: { type: [String, Array, Object] },
     controls: { type: Boolean, default: true },
     readonly: { type: Boolean, default: false },
-    containers: { type: Object, default: null }
+    spread: { type: Boolean, default: true }
   },
   data: () => ({ form: {}, focused: false, spreaded: false }),
   computed: {
@@ -62,17 +63,11 @@ export default {
           visibleFields[el] = properties[el]
           let value = this.value[el]
           if (!value) {
-            if (properties[el].type === 'boolean') {
-              value = false
-            } else if (properties[el].type === 'number') {
-              value = (properties[el].format === 'double') ? 0.0 : 0
-            } else if (properties[el].type === 'array') {
-              value = []
-            } else if (properties[el].type === 'object') {
-              value = {}
-            } else {
-              value = ''
-            }
+            if (properties[el].type === 'boolean') { value = false }
+            else if (properties[el].type === 'number') { value = (properties[el].format === 'double') ? 0.0 : 0 }
+            else if (properties[el].type === 'array') { value = [] }
+            else if (properties[el].type === 'object') { value = {} }
+            else { value = '' }
           }
           this.$set(this.form, el, value)
         }
@@ -117,11 +112,10 @@ export default {
       this.$emit('submit', { name: this.name, form: this.filterValues(null, null, this.$parent.$options._componentTag !== 'OAObjectList') })
     }
   },
-  updated () {
-    if (this.containers && !this.spreaded) {
-      this.$nextTick(function() {
-        this.spreaded = spreadForm(this, this.containers)
-      }.bind(this))
+  async updated () {
+    if (this.spread && !this.spreaded) {
+      await this.$nextTick()
+      this.spreaded = spreadForm(this)
     }
   },
   watch: {

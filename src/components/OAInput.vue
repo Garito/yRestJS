@@ -1,16 +1,12 @@
 <template>
   <div class="field" :class="fieldClasses">
-    <label class="label" :class="labelClasses" :for="name">
-      {{ $t(schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name ) || schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name }}
-    </label>
+    <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
     <div class="field" :class="{ 'has-addons': hasControls }">
       <div class="control" v-if="hasLeftControl">
-        <!-- Use this slot to set a left control -->
         <slot name="leftControl" :data="$data"></slot>
       </div>
 
       <div class="control" :class="controlClasses">
-
         <input class="input" :class="inputClasses" :id="name" :value="value"
           :required="required" :type="type" :maxlength="schema['x-yrest-maxlength'] || null"
           :minlength="schema['x-yrest-minlength'] || null" :readonly="readonly"
@@ -18,14 +14,11 @@
           @input="validate($event)" @change="$emit('change', value)" @keyup="$emit('keyup', $event)"
           @keydown="$emit('keydown', $event)" />
 
-        <!-- Use this slot to set a left icon -->
         <span class="icon is-small is-left" v-if="$slots.leftIcon"><slot name="leftIcon"></slot></span>
-        <!-- Use this slot to set a right icon -->
         <span class="icon is-small is-right" v-if="$slots.rightIcon"><slot name="rightIcon"></slot></span>
       </div>
 
       <div class="control" v-if="hasRightControl">
-        <!-- Use this slot to set a right control -->
         <slot name="rightControl" :data="$data"></slot>
       </div>
     </div>
@@ -71,54 +64,35 @@ export default {
     fieldClasses () { return this.schema['x-yrest-extra_field_classes'] },
     labelClasses () {
       let result = []
-      if (this.schema['x-yrest-sr_only']) {
-        result.push('is-sr-only')
-      }
-      if (this.schema['x-yrest-size']) {
-        result.push(this.schema['x-yrest-size'])
-      }
+      if (this.schema['x-yrest-sr_only']) { result.push('is-sr-only') }
+      if (this.schema['x-yrest-size']) { result.push(this.schema['x-yrest-size']) }
       if (this.schema['x-yrest-extra_label_classes']) {
         let classes = this.schema['x-yrest-extra_label_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
+
       return result
     },
     controlClasses () {
       let result = []
-      if (this.$slots.leftIcon) {
-        result.push('has-icons-left')
-      }
-      if (this.$slots.rightIcon) {
-        result.push('has-icons-right')
-      }
-      if (this.hasControls) {
-        result.push('is-expanded')
-      }
+      if (this.$slots.leftIcon) { result.push('has-icons-left') }
+      if (this.$slots.rightIcon) { result.push('has-icons-right') }
+      if (this.hasControls) { result.push('is-expanded') }
       if (this.schema['x-yrest-extra_control_classes']) {
         let classes = this.schema['x-yrest-extra_control_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result
     },
     inputClasses () {
       let result = []
-      if (this.errors) {
-        result.push('is-danger')
-      }
-      if (this.schema['x-yrest-size']) {
-        result.push(this.schema['x-yrest-size'])
-      }
+      if (this.errors) { result.push('is-danger') }
+      if (this.schema['x-yrest-size']) { result.push(this.schema['x-yrest-size']) }
       if (this.schema['x-yrest-extra_input_classes']) {
         let classes = this.schema['x-yrest-extra_input_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result
@@ -127,9 +101,7 @@ export default {
       let result = ['help']
       if (this.schema['x-yrest-extra_hint_classes']) {
         let classes = this.schema['x-yrest-extra_hint_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result

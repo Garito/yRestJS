@@ -2,9 +2,7 @@
   <div class="field" :class="fieldClasses" :aria-label="schema['x-yrest-sr_only']">
     <label class="label" :class="labelClasses" :for="name">{{ label }}</label>
     <div class="control" :class="controlClasses">
-      <textarea class="textarea" :class="textareaClasses" :id="name" :required="required" :value="value" :placeholder="placeholder"
-        :rows="schema['x-yrest-rows']" :cols="schema['x-yrest-cols']" :maxlength="schema['x-yrest-maxlength']" :readonly="readonly"
-        :minlength="schema['x-yrest-minlength']" @input="validate($event)" @change="$emit('change', value)" v-focus="focus">
+      <textarea class="textarea" :class="textareaClasses" :id="name" :required="required" :value="value" :placeholder="placeholder" :rows="schema['x-yrest-rows']" :cols="schema['x-yrest-cols']" :maxlength="schema['x-yrest-maxlength']" :readonly="readonly" :minlength="schema['x-yrest-minlength']" @input="validate($event)" @change="$emit('change', value)" v-focus="focus">
       </textarea>
     </div>
 
@@ -32,15 +30,13 @@ export default {
   },
   computed: {
     label () {
-      let text = this.schema['x-yrest-sr_only'] || this.schema['x-yrest-label'] || this.name
+      let text = this.schema['x-yrest-label'] || this.name
       return (this.notranslation || typeof this.$t === 'undefined') ? text : this.$t(text)
     },
     placeholder () {
       if (this.schema['x-yrest-placeholder']) {
         return (this.notranslation || typeof this.$t === 'undefined') ? this.schema['x-yrest-placeholder'] : this.$t(this.schema['x-yrest-placeholder'])
-      } else {
-        return null
-      }
+      } else { return null }
     },
     hint () {
       return (this.notranslation || typeof this.$t === 'undefined') ? this.schema['x-yrest-hint'] : this.$t(this.schema['x-yrest-hint'])
@@ -51,17 +47,11 @@ export default {
     fieldClasses () { return this.schema['x-yrest-extra_field_classes'] },
     labelClasses () {
       let result = []
-      if (this.schema['x-yrest-sr_only']) {
-        result.push('sr-only')
-      }
-      if (this.schema['x-yrest-size']) {
-        result.push(this.schema['x-yrest-size'])
-      }
+      if (this.schema['x-yrest-sr_only']) { result.push('sr-only') }
+      if (this.schema['x-yrest-size']) { result.push(this.schema['x-yrest-size']) }
       if (this.schema['x-yrest-extra_label_classes']) {
         let classes = this.schema['x-yrest-extra_lable_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result
@@ -69,17 +59,11 @@ export default {
     controlClasses () { return this.schema['x-yrest-extra_control_classes'] },
     textareaClasses () {
       let result = []
-      if (this.errors) {
-        result.push('is-danger')
-      }
-      if (this.schema['x-yrest-size']) {
-        result.push(this.schema['x-yrest-size'])
-      }
+      if (this.errors) { result.push('is-danger') }
+      if (this.schema['x-yrest-size']) { result.push(this.schema['x-yrest-size']) }
       if (this.schema['x-yrest-extra_textarea_classes']) {
         let classes = this.schema['x-yrest-extra_textarea_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result

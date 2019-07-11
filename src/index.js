@@ -10,20 +10,24 @@ const OACheckbox = () => import('./components/OACheckbox')
 const OASelect = () => import('./components/OASelect')
 const OAObjectList = () => import('./components/OAObjectList')
 
-function spreadForm (form, containers, exceptions = null, callbacks = null) {
-  if (form.$children.length) {
+function spreadForm (form, exceptions = null, callbacks = null) {
+  if(form.$children.length) {
+    let fName = form.$options.propsData.name + '_'
     for (var child of form.$children) {
-      let name = child.$options.propsData.name.split('_').pop()
-      if (callbacks) {
-        for (var [cbName, callback] of Object.entries(callbacks)) {
-          child.$on(cbName, (data) => callback(name, data))
+      if (child.$options.propsData.name) {
+        let name = fName + child.$options.propsData.name.split('_').pop()
+        if (callbacks) {
+          for (var [cbName, callback] of Object.entries(callbacks)) {
+            child.$on(cbName, (data) => callback(name, data))
+          }
         }
-      }
-      if (exceptions && exceptions[name] && containers[exceptions[name]]) {
-        containers[exceptions[name]].appendChild(child.$el)
-      } else if (containers[name]) {
-        let container = Array.isArray(containers[name]) ? containers[name][0] : containers[name]
-        container.appendChild(child.$el)
+
+        if (!exceptions || !exceptions[name]) {
+          let containers = document.getElementsByClassName(name)
+          if (containers.length) {
+            containers[0].appendChild(child.$el)
+          }
+        }
       }
     }
     return true
@@ -33,7 +37,6 @@ function spreadForm (form, containers, exceptions = null, callbacks = null) {
 }
 
 export {
-  spreadForm,
   OAForm,
   OAField,
   OAInput,
@@ -41,6 +44,7 @@ export {
   OACheckbox,
   OASelect,
   OAObjectList,
+  spreadForm,
   focus,
   can,
   BeforeEachGard,

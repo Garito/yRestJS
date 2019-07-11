@@ -1,8 +1,6 @@
 <template>
   <div class="field" :class="fieldClasses">
-    <label class="label" :class="labelClasses" :for="name">
-      {{ $t(schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name ) || schema['x-yrest-sr_only'] || schema['x-yrest-label'] || name }}
-    </label>
+    <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
     <div class="control" :class="controlClasses">
       <Multiselect :value="theValue" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null" :multiple="multiple" :disabled="readonly" @input="value => $emit('input', value)">
 
@@ -50,17 +48,11 @@ export default {
     fieldClasses () { return this.schema['x-yrest-extra_field_classes'] },
     labelClasses () {
       let result = []
-      if (this.schema['x-yrest-sr_only']) {
-        result.push('sr-only')
-      }
-      if (this.schema['x-yrest-size']) {
-        result.push(this.schema['x-yrest-size'])
-      }
+      if (this.schema['x-yrest-sr_only']) { result.push('sr-only') }
+      if (this.schema['x-yrest-size']) { result.push(this.schema['x-yrest-size']) }
       if (this.schema['x-yrest-extra_label_classes']) {
         let classes = this.schema['x-yrest-extra_label_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result
@@ -69,9 +61,7 @@ export default {
       let result = []
       if (this.schema['x-yrest-extra_control_classes']) {
         let classes = this.schema['x-yrest-extra_control_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result
@@ -80,9 +70,7 @@ export default {
       let result = ['help']
       if (this.schema['x-yrest-extra_hint_classes']) {
         let classes = this.schema['x-yrest-extra_hint_classes']
-        if (typeof classes === 'string') {
-          classes = classes.split()
-        }
+        if (typeof classes === 'string') { classes = classes.split() }
         result = result.concat(classes)
       }
       return result

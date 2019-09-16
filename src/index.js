@@ -9,6 +9,7 @@ const OATextarea = () => import('./components/OATextarea')
 const OACheckbox = () => import('./components/OACheckbox')
 const OASelect = () => import('./components/OASelect')
 const OAObjectList = () => import('./components/OAObjectList')
+const FormEditor = () => import('./components/formeditor/index')
 
 function spreadForm (form, exceptions = null, callbacks = null) {
   if(form.$children.length) {
@@ -44,6 +45,7 @@ export {
   OACheckbox,
   OASelect,
   OAObjectList,
+  FormEditor,
   spreadForm,
   focus,
   can,

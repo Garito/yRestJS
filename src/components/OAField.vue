@@ -58,7 +58,7 @@ export default {
           let icon = createElement('font-awesome-icon', { props: { icon: 'lock' }, slot: 'leftIcon' })
 
           return createElement('OAInput', inputOpts, [ icon ])
-        } else if (self.schema.oneOf) {
+        } else if (self.schema.enum) {
           return createElement('OASelect', opts)
         } else {
           return createElement('OAInput', opts)

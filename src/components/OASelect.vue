@@ -31,10 +31,10 @@ export default {
     readonly: { type: Boolean, default: false }
   },
   computed: {
-    multiple () { return this.schema.enum !== undefined },
+    multiple () { return this.type === "array" },
     withLabel () { return typeof this.options[0] === 'object' && this.options[0] !== null },
     options () {
-      let options = this.schema.oneOf || this.schema.enum
+      let options = this.schema.enum
       if (Array.isArray(options[0])) {
         let result = []
         for (var [choice, label] of options) {

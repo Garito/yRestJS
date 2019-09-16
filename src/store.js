@@ -132,6 +132,9 @@ function storeData (rootModel, modules, apiUrl) {
           let url = operation[0]
           let method = operation[1]
           for (var param of (context.state.openApi.paths[url].parameters || [])) {
+            if (param.$ref) {
+              param = context.state.openApi.components.parameters[param.$ref.split('/').pop()]
+            }
             if (param.in === 'path') {
               var [search, replaceWith] = Object.keys(payload).indexOf(param.name) > -1
                 ? ['{' + param.name + '}', payload[param.name]]

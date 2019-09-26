@@ -31,7 +31,7 @@ export default {
     readonly: { type: Boolean, default: false }
   },
   computed: {
-    multiple () { return this.type === "array" },
+    multiple () { return this.schema.type === "array" },
     withLabel () { return typeof this.options[0] === 'object' && this.options[0] !== null },
     options () {
       let options = this.schema.enum || this.schema.oneOf

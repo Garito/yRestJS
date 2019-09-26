@@ -34,7 +34,7 @@ export default {
     multiple () { return this.type === "array" },
     withLabel () { return typeof this.options[0] === 'object' && this.options[0] !== null },
     options () {
-      let options = this.schema.enum
+      let options = this.schema.enum || this.schema.oneOf
       if (Array.isArray(options[0])) {
         let result = []
         for (var [choice, label] of options) {

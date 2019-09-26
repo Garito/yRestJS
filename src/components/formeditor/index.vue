@@ -11,7 +11,7 @@
     </div>
     <div class="columns">
       <div class="column">
-        <OAForm name="Metadata" :schema="formMetadata" :value="metadata" action="Add form" @submit="({ form }) => $emit('submit', { ...form, schema: schema })" v-show="fields.length">
+        <OAForm name="Metadata" :schema="formMetadata" :value="metadata" :action="actionText" @submit="({ form }) => $emit('submit', { ...form, schema: schema })" v-show="fields.length">
           <div class="column" slot="additionalControls">
             <button class="button is-fullwidth" type="button" @click="$emit('cancel')">Cancel</button>
           </div>
@@ -32,7 +32,7 @@ const Fields = () => import('./fields')
 export default {
   name: 'FormEditor',
   components: { Content, Props, Fields },
-  props: { form: Object, formMetadata: { type: Object, required: true } },
+  props: { form: Object, formMetadata: { type: Object, required: true }, actionText: { type: String, default: 'Add form' } },
   data: () => ({ field: null, schema: null, metadata: null, spreaded: false }),
   computed: {
     fields () { return this.schema['x-yrest-form'] || Object.keys(this.schema.properties) },

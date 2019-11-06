@@ -26,6 +26,11 @@ function BeforeEachGard (rootModel, views, components, store) {
         if (component.length === 1) {
           if (store.getters.can(component[0] + '/' + view, to)) {
             to.params.component = component[0] + '_' + view
+            try {
+              await store.dispatch('loadContext', url)
+            } catch (err) {
+              console.log(err)
+            }
             next()
           } else {
             next({ path: '/login', query: { next: to.path } })

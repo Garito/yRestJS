@@ -1,7 +1,7 @@
 export let focus = {
   inserted: function (el, options) {
     if (options.value === undefined || options.value) {
-      el.focus()
+      // el.focus()
     }
   }
 }

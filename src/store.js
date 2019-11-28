@@ -1,6 +1,6 @@
 function storeData (rootModel, modules, apiUrl) {
   return {
-    state: { openApi: null, users: null, permissions: null, roles: null, token: null, actor: null, context: null, errors: {} },
+    state: { openApi: null, users: null, permissions: null, roles: null, token: null, renewInterval: null, actor: null, context: null, errors: {} },
     getters: {
       url: state => obj => { return obj.path === '' ? '/' : obj.path === '/' ? '/' + obj.slug : obj.path + '/' + obj.slug },
       path: (state, getters) => obj => getters.url(obj).substr(1),
@@ -76,6 +76,7 @@ function storeData (rootModel, modules, apiUrl) {
       setPermissions: (state, permissions) => { state.permissions = permissions },
       setRoles: (state, roles) => { state.roles = roles },
       setToken: (state, token) => { state.token = token },
+      setRenewInterval: (state, id) => { state.renewInterval = id },
       setActor: (state, actor) => { state.actor = actor },
       setContext: (state, context) => { state.context = context },
       setErrors: (state, errors) => { state.errors = errors },
@@ -213,6 +214,14 @@ function storeData (rootModel, modules, apiUrl) {
         } else {
           throw rjson
         }
+      },
+      async renewToken (context) {
+        let result = await context.dispatch('api', { name: 'Root/renew_token'})
+        if (result) {
+          context.commit('setToken', result.access_token)
+          context.commit('setRenewInterval', setTimeout(() => context.dispatch('renewToken'),  (result.valid - 2) * 1000 * 60))
+        }
+        console.log(result)
       },
       reset (context) {
         context.commit('setToken', null)

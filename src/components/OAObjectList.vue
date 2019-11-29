@@ -93,7 +93,7 @@ export default {
     isObject (obj) { return obj instanceof Object },
     del (index) {
       let value = this.value
-      value.pop(index)
+      value.splice(index, 1)
       this.$emit('input', value)
     }
   },

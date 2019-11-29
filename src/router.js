@@ -29,7 +29,9 @@ function BeforeEachGard (rootModel, views, components, store) {
             try {
               await store.dispatch('loadContext', url)
             } catch (err) {
-              console.log(err)
+              if (process.env.NODE_ENV !== 'production') {
+                console.log(err)
+              }
             }
             next()
           } else {

@@ -221,7 +221,6 @@ function storeData (rootModel, modules, apiUrl) {
           context.commit('setToken', result.access_token)
           context.commit('setRenewInterval', setTimeout(() => context.dispatch('renewToken'),  (result.valid - 2) * 1000 * 60))
         }
-        console.log(result)
       },
       reset (context) {
         context.commit('setToken', null)

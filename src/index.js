@@ -2,6 +2,8 @@ import { focus, can } from './directives'
 import { BeforeEachGard, loadComponents } from './router'
 import storeData from './store'
 
+const DynamicLayout = () => import('./components/dynamiclayout')
+
 const OAForm = () => import('./components/OAForm')
 const OAField = () => import('./components/OAField')
 const OAInput = () => import('./components/OAInput')
@@ -38,6 +40,7 @@ function spreadForm (form, exceptions = null, callbacks = null) {
 }
 
 export {
+  DynamicLayout,
   OAForm,
   OAField,
   OAInput,

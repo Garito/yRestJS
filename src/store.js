@@ -111,10 +111,12 @@ function storeData (rootModel, modules, apiUrl) {
             options['method'] = payload.method
           }
         }
+
+        if (payload.url === '') {
+          payload.url = '/'
+        }
+
         try {
-          if (payload.url === '') {
-            payload.url = '/'
-          }
           let result = await fetch(apiUrl + payload.url, options)
           return result
         } catch (err) {

@@ -112,6 +112,9 @@ function storeData (rootModel, modules, apiUrl) {
           }
         }
         try {
+          if (payload.url === '') {
+            payload.url = '/'
+          }
           let result = await fetch(apiUrl + payload.url, options)
           return result
         } catch (err) {

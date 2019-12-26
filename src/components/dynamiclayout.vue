@@ -10,6 +10,16 @@ export default {
   name: 'DynamicLayout',
   props: { name: String },
   methods: {
+    getFeatures (tmpl, ctx, indexer) {
+      let container = document.createElement('div')
+      container.innerHTML = tmpl
+      let features = {}
+      container.querySelectorAll('[id]').forEach(n => {
+        let query = n.getAttribute('query')
+        features[n.id] = query ? indexer(query, { data: ctx }).value : n.id
+      })
+      return features
+    },
     spread () {
       let tmpl = document.getElementById(this.name + '_tmpl')
       let data = document.getElementById(this.name + '_data')
@@ -29,6 +39,10 @@ export default {
     }
   },
   async mounted () {
+    await this.$nextTick()
+    this.spread()
+  },
+  async updated () {
     await this.$nextTick()
     this.spread()
   }

@@ -3,6 +3,7 @@ import { BeforeEachGard, loadComponents } from './router'
 import storeData from './store'
 
 const DynamicLayout = () => import('./components/dynamiclayout')
+const Layout = () => import('./components/layout')
 
 const OAForm = () => import('./components/OAForm')
 const OAField = () => import('./components/OAField')
@@ -41,6 +42,7 @@ function spreadForm (form, exceptions = null, callbacks = null) {
 
 export {
   DynamicLayout,
+  Layout,
   OAForm,
   OAField,
   OAInput,

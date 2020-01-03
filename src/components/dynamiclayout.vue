@@ -16,7 +16,16 @@ export default {
       let features = {}
       container.querySelectorAll('[id]').forEach(n => {
         let query = n.getAttribute('query')
-        features[n.id] = query ? indexer(query, { data: ctx }).value : n.id
+        if (query) {
+          let parts = query.split('||')
+          for (let part of parts) {
+            let indexed = indexer(part, { data: ctx }).value
+            if (indexed) {
+              features[n.id] = indexed
+              break
+            }
+          }
+        }
       })
       return features
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="field" :class="fieldClasses">
+  <div :id="name" class="field" :class="fieldClasses">
     <label :class="labelClasses">
       <slot name="widget" :checked="checked" :schema="schema"></slot>
       <input type="checkbox" v-model="checked" :required="required" @click="click" @change="$emit('input', checked)" v-show="!$scopedSlots.widget" />

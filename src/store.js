@@ -45,8 +45,10 @@ function storeData (rootModel, modules, apiUrl) {
         let [context, name] = permission.split('/')
         let contextLower = context.toLowerCase()
         let permissions = getters.permissionsByContext()
+
         if (permissions[contextLower]) {
           let perm = permissions[contextLower][name] || null
+
           if (perm) {
             if (perm.roles.length === 0) {
               return true

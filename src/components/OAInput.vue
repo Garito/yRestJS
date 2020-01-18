@@ -1,5 +1,5 @@
 <template>
-  <div class="field" :class="fieldClasses">
+  <div :id="name" class="field" :class="fieldClasses">
     <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
     <div class="field" :class="{ 'has-addons': hasControls }">
       <div class="control" v-if="hasLeftControl">

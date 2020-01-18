@@ -1,5 +1,5 @@
 <template>
-  <div class="field" :class="fieldClasses" :aria-label="schema['x-yrest-sr_only']">
+  <div :id="name" class="field" :class="fieldClasses" :aria-label="schema['x-yrest-sr_only']">
     <label class="label" :class="labelClasses" :for="name">{{ label }}</label>
     <div class="control" :class="controlClasses">
       <textarea class="textarea" :class="textareaClasses" :id="name" :required="required" :value="value" :placeholder="placeholder" :rows="schema['x-yrest-rows']" :cols="schema['x-yrest-cols']" :maxlength="schema['x-yrest-maxlength']" :readonly="readonly" :minlength="schema['x-yrest-minlength']" @input="validate($event)" @change="$emit('change', value)" v-focus="focus">

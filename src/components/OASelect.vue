@@ -1,5 +1,5 @@
 <template>
-  <div class="field" :class="fieldClasses">
+  <div :id="name" class="field" :class="fieldClasses">
     <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
     <div class="control" :class="controlClasses">
       <Multiselect :value="theValue" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null" :multiple="multiple" :disabled="readonly" @input="value => $emit('input', value)">

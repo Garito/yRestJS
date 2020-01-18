@@ -1,5 +1,5 @@
 <template>
-  <div class="field" :class="fieldClasses">
+  <div :id="name" class="field" :class="fieldClasses">
     <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
     <div class="control" :class="controlClasses">
       <table class="table is-marginless is-fullwidth">
@@ -23,7 +23,7 @@
         </tr>
         <tr v-if="!readonly">
           <td v-for="field in fieldNames" :key="'new_' + field" :class="name + '_' + field"></td>
-          <td :class="name + '_controls'"><label class="label">&nbsp;</label></td>
+          <td :class="name + '_controls'"><label class="label" v-html="'&nbsp;'">%</label></td>
         </tr>
       </table>
       <OAForm :name="name" :schema="schema.items" action="Add" @submit="({ form }) => $emit('input', value.concat([ form ]))" ref="newItem" v-if="!readonly" />

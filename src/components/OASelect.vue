@@ -2,7 +2,7 @@
   <div :id="name" class="field" :class="fieldClasses">
     <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
     <div class="control" :class="controlClasses">
-      <Multiselect :value="theValue" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null" :multiple="multiple" :disabled="readonly" @input="value => $emit('input', value)">
+      <Multiselect :value="theValue" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null" :multiple="multiple" :disabled="readonly" :placeholder="placeholder" :selectLabel="selectLabel" :deselectLabel="deselectLabel" @input="value => $emit('input', value)">
 
       </Multiselect>
     </div>
@@ -28,7 +28,10 @@ export default {
     required: { type: Boolean, default: false },
     errors: { type: Array, default: null },
     focus: { type: Boolean, default: false },
-    readonly: { type: Boolean, default: false }
+    readonly: { type: Boolean, default: false },
+    placeholder: String,
+    selectLabel: String,
+    deselectLabel: String
   },
   computed: {
     multiple () { return this.schema.type === "array" },

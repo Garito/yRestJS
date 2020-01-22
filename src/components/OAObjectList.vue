@@ -4,12 +4,12 @@
     <div class="control" :class="controlClasses">
       <table class="table is-marginless is-fullwidth">
         <col v-for="field in fieldNames" :key="'col_' + field" :style="colSizes[field] ? 'width: ' + colSizes[field] + ';' : null">
-        <tr>
+        <!-- <tr>
           <th v-for="field in fieldNames" :key="'th_' + field">
-            {{ schema.items.properties[field]['x-yrest-label'] || field }}
+            {{ $t(schema.items.properties[field]['x-yrest-label'] || field) }}
           </th>
           <th v-if="!readonly"></th>
-        </tr>
+        </tr> -->
         <tr v-for="(item, index) in value" :key="item._id">
           <td v-for="field in fieldNames" :key="field + '_' + index">
             <template v-if="isObject(value[index][field])">{{ value[index][field].label }}</template>
@@ -23,10 +23,10 @@
         </tr>
         <tr v-if="!readonly">
           <td v-for="field in fieldNames" :key="'new_' + field" :class="name + '_' + field"></td>
-          <td :class="name + '_controls'"><label class="label" v-html="'&nbsp;'">%</label></td>
+          <td :class="name + '_controls'"><label class="label" v-html="'&nbsp;'"></label></td>
         </tr>
       </table>
-      <OAForm :name="name" :schema="schema.items" action="Add" @submit="({ form }) => $emit('input', value.concat([ form ]))" ref="newItem" v-if="!readonly" />
+      <OAForm :name="name" :schema="schema.items" :action="$t('Add')" @submit="({ form }) => $emit('input', value.concat([ form ]))" ref="newItem" v-if="!readonly" />
     </div>
     <div :class="hintClasses" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) }}</div>
     <div class="help errors is-danger" v-if="errors">

@@ -22,7 +22,7 @@
 
       <slot name="formBottom"></slot>
 
-      <FormControls name="controls" :action="action" v-if="!readonly && controls" @ok="submit">
+      <FormControls name="controls" :action="action" :loading="loading" v-if="!readonly && controls" @ok="submit">
         <slot name="additionalControls"></slot>
       </FormControls>
     </template>
@@ -46,7 +46,8 @@ export default {
     errors: { type: [String, Array, Object] },
     controls: { type: Boolean, default: true },
     readonly: { type: Boolean, default: false },
-    spread: { type: Boolean, default: true }
+    spread: { type: Boolean, default: true },
+    loading: { type: Boolean, default: false }
   },
   data: () => ({ form: {}, focused: false, spreaded: false }),
   computed: {

@@ -1,6 +1,6 @@
 <template>
   <div :id="name" class="field" :class="fieldClasses">
-    <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
+    <label class="label" :class="labelClasses" :for="name" v-t="schema['x-yrest-label'] || name " />
     <div class="field" :class="{ 'has-addons': hasControls }">
       <div class="control" v-if="hasLeftControl">
         <slot name="leftControl" :data="$data"></slot>

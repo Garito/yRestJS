@@ -3,7 +3,12 @@
     <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
     <div class="control" :class="controlClasses">
       <Multiselect :value="theValue" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null" :multiple="multiple" :disabled="readonly" :placeholder="placeholder" :selectLabel="selectLabel" :deselectLabel="deselectLabel" @input="value => $emit('input', value)">
-
+        <template slot="singleLabel" slot-scope="props">
+          <slot name="singleLabel" :props="props"></slot>
+        </template>
+        <template slot="option" slot-scope="props">
+          <slot name="option" :props="props"></slot>
+        </template>
       </Multiselect>
     </div>
     <div :class="hintClasses" v-if="schema['x-yrest-hint']">{{ $t(schema['x-yrest-hint']) || schema['x-yrest-hint'] }}</div>

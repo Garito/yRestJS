@@ -95,7 +95,10 @@ function storeData (rootModel, modules, apiUrl) {
             }),
             body: JSON.stringify(payload.data)
           }
-          if (context.state.token) {
+          if (payload.token) {
+            options.headers.append('Authorization', 'Bearer ' + payload.token)
+          }
+          else if (context.state.token) {
             options.headers.append('Authorization', 'Bearer ' + context.state.token)
           }
         } else if (context.state.token) {
@@ -119,7 +122,7 @@ function storeData (rootModel, modules, apiUrl) {
         }
 
         try {
-          let result = await fetch(apiUrl + payload.url, options)
+          let result = await fetch(payload.URL ? payload.URL : apiUrl + payload.url, options)
           return result
         } catch (err) {
           return err

@@ -101,6 +101,15 @@ function storeData (rootModel, modules, apiUrl) {
           else if (context.state.token) {
             options.headers.append('Authorization', 'Bearer ' + context.state.token)
           }
+        } else if (payload.token) {
+          options = {
+            headers: new Headers({
+              'Authorization': 'Bearer ' + payload.token
+            })
+          }
+          if (payload.method) {
+            options['method'] = payload.method
+          }
         } else if (context.state.token) {
           options = {
             headers: new Headers({

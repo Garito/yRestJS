@@ -1,8 +1,8 @@
 <template>
   <div :id="name" class="field" :class="fieldClasses">
-    <label class="label" :class="labelClasses" :for="name">{{ $t(schema['x-yrest-label'] || name ) }}</label>
+    <label class="label" :class="labelClasses" :for="name + 'control'">{{ $t(schema['x-yrest-label'] || name ) }}</label>
     <div class="control" :class="controlClasses">
-      <Multiselect :value="theValue" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null" :multiple="multiple" :disabled="readonly" :placeholder="placeholder" :selectLabel="selectLabel" :deselectLabel="deselectLabel" @input="value => $emit('input', value)">
+      <Multiselect :id="name + 'control'" :value="theValue" :options="options" :label="withLabel ? 'label' : null" :track-by="withLabel ? 'choice' : null" :multiple="multiple" :disabled="readonly" :placeholder="placeholder" :selectLabel="selectLabel" :deselectLabel="deselectLabel" @input="value => $emit('input', value)">
         <template slot="singleLabel" slot-scope="props">
           <slot name="singleLabel" :props="props"></slot>
         </template>

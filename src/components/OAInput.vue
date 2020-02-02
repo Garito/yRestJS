@@ -1,13 +1,13 @@
 <template>
   <div :id="name" class="field" :class="fieldClasses">
-    <label class="label" :class="labelClasses" :for="name" v-t="schema['x-yrest-label'] || name " />
+    <label class="label" :class="labelClasses" :for="name + 'control'" v-t="schema['x-yrest-label'] || name " />
     <div class="field" :class="{ 'has-addons': hasControls }">
       <div class="control" v-if="hasLeftControl">
         <slot name="leftControl" :data="$data"></slot>
       </div>
 
       <div class="control" :class="controlClasses">
-        <input class="input" :class="inputClasses" :id="name" :value="value"
+        <input class="input" :class="inputClasses" :id="name + 'control'" :value="value"
           :required="required" :type="type" :maxlength="schema['x-yrest-maxlength'] || null"
           :minlength="schema['x-yrest-minlength'] || null" :readonly="readonly"
           :placeholder="$t(schema['x-yrest-placeholder']) || schema['x-yrest-placeholder'] || null" v-focus="focus"

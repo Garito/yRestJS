@@ -55,7 +55,7 @@ function storeData (rootModel, modules, apiUrl) {
             } else {
               var url = (state.context && state.context.object) ? getters.url(state.context.object) : ''
               for (var per of perm.roles) {
-                if (state.actor && (state.actor.roles.indexOf(per) > -1 || (url && (state.actor.roles.indexOf(per + '@' + url) > -1)) || state.actor.roles.filter(r => r.startsWith(per + '@' + url).length))) {
+                if (state.actor && (state.actor.roles.indexOf(per) > -1 || (url && (state.actor.roles.indexOf(per + '@' + url) > -1 || state.actor.roles.filter(r => (per + '@' + url).startsWith(r)).length > 0)))) {
                   return true
                 } else {
                   let getter = 'User/is_' + per

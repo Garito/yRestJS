@@ -13,8 +13,10 @@ export default {
       },
       render: el.render,
       staticRenderFns: el.staticRenderFns,
-      router: this.$router
-    }).$mount()
+      router: this.$router,
+    })
+    el.$slots = this.$slots
+    el.$mount()
 
     return el._vnode
   }

@@ -82,7 +82,7 @@ function storeData (rootModel, modules, apiUrl) {
       setActor: (state, actor) => { state.actor = actor },
       setContext: (state, context) => { state.context = context },
       setErrors: (state, errors) => { state.errors = errors },
-      setError: (state, payload) => { state.errors = { ...state.errors, ...payload } }
+      setError: (state, payload) => { state.errors = Object.assign({}, state.errors, payload) }
     },
     actions: {
       async fetch (context, payload) {

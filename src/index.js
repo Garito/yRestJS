@@ -29,6 +29,11 @@ function spreadForm (form, exceptions = null, callbacks = null) {
         if (!exceptions || !exceptions[name]) {
           let containers = document.getElementsByClassName(name)
           if (containers.length) {
+            for (let node of containers[0].childNodes) {
+              if (!node.classList.contains('no-spread')) {
+                containers[0].removeChild(node)
+              }  
+            }
             containers[0].appendChild(child.$el)
           }
         }
